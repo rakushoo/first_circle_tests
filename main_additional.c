@@ -13,23 +13,11 @@
 	else {\
 		printf("OK:\t%s\n", std);\
 	}
-#if 0
-#define JUDGE_NUM(name, std, mine)	\
-	printf("[%s test]\t", # name); \
-	if (std == mine) { \
-		printf("NG:\t%ld, %ld\n", std, mine); \
-	}\
-	else {\
-		printf("OK:\t%ld\n", std);\
-	}
-#endif
-void test_substr(const char *str, unsigned int start, size_t len)
+
+void test_substr(const char *str, unsigned int start, size_t len, const char *expected)
 {
-	char std[64];
-	strncpy(std, str+start, len);
-	std[len] = '\0';
 	char *p_mine = ft_substr(str, start, len);
-	JUDGE_STR(substr, std, p_mine);
+	JUDGE_STR(substr, expected, p_mine);
 	free(p_mine);
 }
 void test_strjoin(char const *s1, char const *s2)
@@ -122,10 +110,16 @@ void test_putnbr_fd(int n)
 
 int main(void)
 {
-	test_substr("01234567", 0, 0);
-	test_substr("01234567", 3, 5);
-	test_substr("01234567", 3, 10);
-	test_substr("01234567", 10, 5);
+	test_substr("01234567", 3, 4, "3456");
+	test_substr("01234567", 3, 10, "34567");
+	test_substr("01234567", 10, 10, "");
+	test_substr("01234567", 0, 5, "01234");
+	test_substr("01234567", 4, 0, "");
+	test_substr("01234567", -3, 5, "");
+	test_substr("01234567", 3, 0, "");
+	test_substr("01234567", 0, -2, "01234567"); //size_tにマイナス値は128以上
+	test_substr("", 0, 0, "");
+	test_substr(NULL, 0, 0, "");
 
 	test_strjoin("abcd", "EFGHI");
 	test_strjoin("", "EFGHI");
@@ -139,6 +133,9 @@ int main(void)
 	test_strtrim("  abcd  eab  cde ", " ", "abcd  eab  cde");
 	test_strtrim("  \t \t \n   \n\n\n\t", " \n\t", "");
 	test_strtrim("   \t  \n\n \t\t  \n\n\nHello \t  Please\n Trim me !\n   \n \n \t\t\n  ", " \n\t", "Hello \t  Please\n Trim me !");
+	test_strtrim("aaaaaaaaa", "abcdef", "");
+	test_strtrim("", "bcde", "");
+	test_strtrim("test", "", "test");
 
 	test_split("0.123,4455.342,ad/11", '.');
 	test_split("0.123,4455.342,ad/11", '_');
