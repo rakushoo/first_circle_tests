@@ -72,7 +72,7 @@ int	main(void)
 
 	//lstnew
 	p = ft_lstnew(ft_strdup("NEW"));
-	JUDGE_SIZE(lstnew, sizeof(t_list), sizeof(p));
+	JUDGE_SIZE(lstnew, sizeof(t_list), sizeof(*p));
 	top = &p;
 	printf("[lstnew test]\t");
 	show_list_contents(top);
