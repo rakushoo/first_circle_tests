@@ -24,7 +24,7 @@ int	main(int argc, char **argv)
 			return (0);
 		}
 	}
-	fd[fd_num] = 12345;
+	fd[fd_num] = 1234;//2にすれば標準入力
 	fd_num++;
 	while (1)
 	{
@@ -33,11 +33,11 @@ int	main(int argc, char **argv)
 			rc = get_next_line(fd[i], &p);
 			if (rc == -1)
 			{
-				printf("%d:File Read Error\n", i);
+				printf("fd[%d]:File Read Error\n", i);
 			}
 			else if (rc == 1)
 			{
-				printf("%d:Read %s\n", i, p);
+				printf("fd[%d]:Read %s\n", i, p);
 				free(p);
 			}
 			else {
@@ -46,7 +46,6 @@ int	main(int argc, char **argv)
 					close(fd[i]);
 				}
 				return (0);
-				//break ;
 			}
 		}
 	}
