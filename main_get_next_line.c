@@ -18,8 +18,8 @@ int	main(int argc, char **argv)
 		fd = open(argv[1], O_RDONLY);
 		if (fd == -1)
 		{
-				printf("ファイルオープンエラー\n");
-				return (0);
+			printf("ファイルオープンエラー\n");
+			return (0);
 		}
 	}
 	else
@@ -32,7 +32,7 @@ int	main(int argc, char **argv)
 			printf("ファイル読み込みエラー\n");
 			break ;
 		}
-		printf("read:%d - %s\n", rc, p);
+		printf("%s\n", p);
 		free(p);
 	}
 	close(fd);
