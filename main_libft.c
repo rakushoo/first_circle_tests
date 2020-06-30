@@ -174,6 +174,19 @@ void test_strncmp(const char *str, size_t len)
 	test_strncmp(str, len);
 
 
+void test_calloc(size_t size)
+{
+	void *d1 = ft_calloc(size, sizeof(int));
+	void *d2 = calloc(size, sizeof(int));
+	int	res;
+	if (!(res = memcmp(d1, d2, size * sizeof(int))))
+	{
+		printf("OK - calloc (%d)\n", res);
+	}else{
+		printf("NG - calloc (%d)\n", res);
+	}
+}
+
 
 
 int main(void)
@@ -336,6 +349,9 @@ int main(void)
 	JUDGE(isprint, 0x20); JUDGE(isprint, '!'); JUDGE(isprint, '~'); JUDGE(isprint, 0x7F);
 	JUDGE(toupper, 'A'); JUDGE(toupper, '`'); JUDGE(toupper, 'a'); JUDGE(toupper, '{');
 	JUDGE(tolower, '@'); JUDGE(tolower, 'A'); JUDGE(tolower, 'Z'); JUDGE(tolower, '[');
+
+	//calloc
+	test_calloc(8539);
 
 	return 0;
 }
