@@ -41,6 +41,8 @@ int	main(int argc, char **argv)
 				free(p);
 			}
 			else {
+				printf("fd[%d]:EOF %s\n", i, p);
+				free(p);
 				for (int i = 0; i < (argc - 1); i++)
 				{
 					close(fd[i]);

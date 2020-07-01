@@ -25,16 +25,24 @@ int	main(int argc, char **argv)
 	else
 		return (1);
 
-	while (0/*GNL_EOF*/ != (rc = get_next_line(fd, &p)))
+	while (-1/*GNL_ERR*/ != (rc = get_next_line(fd, &p)))
 	{
-		if (rc == -1/*GNL_ERR*/)
+		if (rc == 1/*GNL_READ*/)
 		{
-			printf("ファイル読み込みエラー\n");
+			printf("%s\n", p);
+			free(p);
+			p = NULL;
+		}
+		else if (rc == 0/*GNL_EOF*/)
+		{
+			printf("%s", p);
+			free(p);
 			break ;
 		}
-		printf("%s\n", p);
-		free(p);
-		p = NULL;
+	}
+	if (rc == -1/*GNL_ERR*/)
+	{
+		printf("ファイル読み込みエラー\n");
 	}
 	close(fd);
 	return (0);
