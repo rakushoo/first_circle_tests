@@ -25,9 +25,9 @@ int	main(int argc, char **argv)
 	else
 		return (1);
 
-	while (GNL_EOF != (rc = get_next_line(fd, &p)))
+	while (0/*GNL_EOF*/ != (rc = get_next_line(fd, &p)))
 	{
-		if (rc == GNL_ERR)
+		if (rc == -1/*GNL_ERR*/)
 		{
 			printf("ファイル読み込みエラー\n");
 			break ;
