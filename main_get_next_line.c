@@ -16,11 +16,6 @@ int	main(int argc, char **argv)
 	else if (argc == 2)
 	{
 		fd = open(argv[1], O_RDONLY);
-		if (fd == -1)
-		{
-			printf("ファイルオープンエラー\n");
-			return (0);
-		}
 	}
 	else
 		return (1);
@@ -42,7 +37,7 @@ int	main(int argc, char **argv)
 	}
 	if (rc == -1/*GNL_ERR*/)
 	{
-		printf("ファイル読み込みエラー\n");
+		printf("File Read Error\n");
 	}
 	close(fd);
 	return (0);
