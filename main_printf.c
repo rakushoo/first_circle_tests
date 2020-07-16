@@ -78,7 +78,7 @@ int	main(void)
 		TEST_ARG3(%s|%x|%X\t, "middle", 22, 33);
 	}
 
-#if 0
+#if 1
 	//Simple Flags Management -0.*
 	CASE(Check the 'minimum file width' with values. bigger. equal and smaller than the string);
 	{
@@ -98,6 +98,7 @@ int	main(void)
 		TEST_ARG1(%12.6s, "ABCDEFGHI");
 		TEST_ARG1(%9.6s, "ABCDEFGHI");
 		TEST_ARG1(%6.6s, "ABCDEFGHI");
+		TEST_ARG1(%.s, "ABCDEFGHI");
 	}
 	CASE(Check s minimum field width with -);
 	{
@@ -117,6 +118,7 @@ int	main(void)
 		TEST_ARG1(%-12.6s, "ABCDEFGHI");
 		TEST_ARG1(%-9.6s, "ABCDEFGHI");
 		TEST_ARG1(%-6.6s, "ABCDEFGHI");
+		TEST_ARG1(%.-6s, "ABCDEFGHI");
 	}
 	//Warningが出るが -Wno-format でログ消える
 	CASE(Check s minimum field width with 0);
@@ -157,14 +159,14 @@ int	main(void)
 	CASE(Check '*' as minimum field width. -1 or 0 etc.);
 	{
 		TEST_ARG2(minimum_field *\t\t%*s, 2,"ABCDE");
-		TEST_ARG2(minimum_field *\t\t%*s,-1,"ABCDE");
+		TEST_ARG2(minimum_field *\t\t%*s,-1,"ABCDE"); //NG
 		TEST_ARG2(minimum_field *\t\t%*s, 0,"ABCDE");
 	}
 	CASE(Check '*' as precision. -1 or 0 etc.);
 	{
 		TEST_ARG2(precision *\t\t%.*s, -4, "ABCDE");
 		TEST_ARG2(precision *\t\t%.*s, -3, "ABCDE");
-		TEST_ARG2(precision *\t\t%.*s, 0, "ABCDE");
+		TEST_ARG2(precision *\t\t%.*s, 0, "ABCDE"); //NG
 	}
 	CASE(Check '*' as both);
 	{
@@ -186,9 +188,9 @@ int	main(void)
 		TEST_ARG3(both *\t\t%0*.*s, 8, 8, "abcde");
 	}
 
-#if 0
+#if 1
 	//Get Crazy
-	CASE(Get Crazy);
+	CASE(XXX!!!***>>>??? Get Crazy ```+++***###$$$);
 	{
 		TEST(tab_\t_can_show);
 		TEST(exc_\\_can_show);
@@ -197,15 +199,28 @@ int	main(void)
 		TEST_ARG3(astarisc minus\t%.*s%d, -3, "abcde", 888); //精度の時は-値は無視する
 		TEST_ARG3(astarisc minus\t%*s%d, -10, "abcde", 888); // -10に置き換えて、左詰
 
-		//Bigger Parameter Case;
-		TEST_ARG1(max int wd %2147483647s, "123");// 即error 改行も出力されない
-		TEST_ARG1(over int wd %2147483648s, "123");// 即error 改行も出力されない
-		TEST_ARG1(max int precision %.2147483647s, "123");
-		TEST_ARG1(over int precision %.2147483648s, "123");
-		TEST_ARG2(max int wd param %*s, 2147483647, "ABC");// 即error 改行も出力されない
-		TEST_ARG2(over int wd param %*s, 2147483648, "ABC");// 即error 改行も出力されない
-		TEST_ARG2(max int precision param %.*s, 2147483647, "ABC");
-		TEST_ARG2(over int precision param  %.*s, 2147483648, "ABC");
+		CASE(d convert);
+		TEST_ARG1(%10.3d, 123456789);
+		TEST_ARG1(%6.3d, 123456789);
+		TEST_ARG1(%6.3d, -123456789);
+		TEST_ARG1(%5.12d, 123456789);
+		TEST_ARG1(%015.3d, 123456789);
+		TEST_ARG1(%-15.12d, 123456789);
+		TEST_ARG1(%15.d, 123456789);
+		TEST_ARG1(%d, 2147483647);
+		TEST_ARG1(%d, -2147483648);
+
+		CASE(Bigger Parameter Case);
+		TEST_ARG1(%2147483647s max int wd, "123");// 即error 改行も出力されない
+		TEST_ARG1(%2147483648s over int wd, "123");// 即error 改行も出力されない
+		TEST_ARG1(%.2147483647s max int precision, "123");
+		TEST_ARG1(%.2147483648s over int precision, "123");
+		TEST_ARG2(%*s max int wd param, 2147483647, "ABC");// 即error 改行も出力されない
+		TEST_ARG2(%*s over int wd param, 2147483648, "ABC");// 即error 改行も出力されない
+		TEST_ARG2(%.*s max int precision param, 2147483647, "ABC");
+		TEST_ARG2(%.*s over int precision param, 2147483648, "ABC");
+		TEST_ARG2(%*s min int wd param, -2147483648, "ABC");
+		TEST_ARG2(%.*s min int precision param, -2147483648, "ABC");
 
 		TEST_ARG1(%100.4s, "123456789");
 		TEST_ARG1(%-100.4s, "123456789");
