@@ -12,6 +12,7 @@ copy the following sources to your repository.
 * main_get_next_line.c
 * main_get_next_line_bonus.c
 * data_GNL/  
+
 % sh data_GNL/test_getNextLine.sh  
 
 ### ft_printf
