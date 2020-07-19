@@ -48,7 +48,8 @@ int	main(void)
 	TEST(%12.34q);
 #endif
 
-#if 1	TEST_ARG1(%020u, (unsigned int)&c);//0x0000007ffee1246787
+#if 1
+	TEST_ARG1(%020u, (unsigned int)&c);//0x0000007ffee1246787
 	TEST_ARG1(%015.3p, &c);	// 0x7ffee45c2777
 	TEST_ARG1(%20p, &c);	//      0x7ffee1246787
 	TEST_ARG1(%020p, &c);	//0x0000007ffee1246787
