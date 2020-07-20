@@ -34,7 +34,6 @@ void	judge_retval(int std, int mine)
 		printf("[ERROR] ret_val diff(%d,%d)\n", std, mine);
 }
 
-#include <stdlib.h>
 int	main(void)
 {
 	char *p;
@@ -42,14 +41,6 @@ int	main(void)
 	unsigned int	ui = 5;
 	char c;
 	char s_hidden[] = "hi low";
-
-	printf("return value(%d)\n", printf("test[%12.0-00"));
-	//printf("test[%12.0-]\n");//""
-	printf("[%12s]\n", "abcdef");
-	printf("[%-12s]\n", "abcdef");
-	printf("[%.0-12s]\n", "abcdef");
-	printf("[%.1-12s]\n", "abcdef");
-	printf("[%.*s]\n", -12, "abcdef");
 
 #if 0
 	//未対応ケース
@@ -124,15 +115,13 @@ int	main(void)
 	TEST_ARG1(%-12.15X, 3000000000);
 	TEST_ARG1(%-15.12X, 4294967295);
 	TEST_ARG1(%015.3p, &c);//0フラグが取り消されるケース
-	TEST_ARG1(%-15.12p, &c);//NG
+	TEST_ARG1(%-15.12p, &c);
 #endif
-#if 0
+#if 1
 	// Simple Conversion Management cspdiuxX
 	CASE(Simply check each conversion without any flags);
 	{
 		TEST(simply check);
-		TEST(no convert%10%);
-		TEST(no convert%010%);
 	}
 	CASE(Try special cases like 0 or smallest int or empty string or null);
 	{
@@ -243,27 +232,27 @@ int	main(void)
 	CASE(Check '*' as minimum field width. -1 or 0 etc.);
 	{
 		TEST_ARG2(minimum_field *\t\t%*s, 2,"ABCDE");
-		TEST_ARG2(minimum_field *\t\t%*s,-1,"ABCDE"); //NG
+		TEST_ARG2(minimum_field *\t\t%*s,-1,"ABCDE");
 		TEST_ARG2(minimum_field *\t\t%*s, 0,"ABCDE");
 	}
 	CASE(Check '*' as precision. -1 or 0 etc.);
 	{
 		TEST_ARG2(precision *\t\t%.*s, -4, "ABCDE");
 		TEST_ARG2(precision *\t\t%.*s, -3, "ABCDE");
-		TEST_ARG2(precision *\t\t%.*s, 0, "ABCDE"); //NG
+		TEST_ARG2(precision *\t\t%.*s, 0, "ABCDE");
 	}
 	CASE(Check '*' as both);
 	{
 		TEST_ARG3(both *\t\t%0*.*s, -2, -2, "abcde");
-		TEST_ARG3(both *\t\t%0*.*s, -2, 0, "abcde"); //NG
+		TEST_ARG3(both *\t\t%0*.*s, -2, 0, "abcde");
 		TEST_ARG3(both *\t\t%0*.*s, -2, 4, "abcde");
 		TEST_ARG3(both *\t\t%0*.*s, -2, 8, "abcde");
 		TEST_ARG3(both *\t\t%0*.*s, 0, -2, "abcde");
-		TEST_ARG3(both *\t\t%0*.*s, 0, 0, "abcde"); //NG
+		TEST_ARG3(both *\t\t%0*.*s, 0, 0, "abcde");
 		TEST_ARG3(both *\t\t%0*.*s, 0, 4, "abcde");
 		TEST_ARG3(both *\t\t%0*.*s, 0, 8, "abcde");
 		TEST_ARG3(both *\t\t%0*.*s, 4, -2, "abcde");
-		TEST_ARG3(both *\t\t%0*.*s, 4, 0, "abcde"); //NG 値と長さ差分
+		TEST_ARG3(both *\t\t%0*.*s, 4, 0, "abcde");
 		TEST_ARG3(both *\t\t%0*.*s, 4, 4, "abcde");
 		TEST_ARG3(both *\t\t%0*.*s, 4, 8, "abcde");
 		TEST_ARG3(both *\t\t%0*.*s, 8, -2, "abcde");
@@ -282,6 +271,9 @@ int	main(void)
 		TEST_ARG3(astarisc minus\t%.*s%d, -3, "abcde", 888); //精度の時は-値は無視する
 		TEST_ARG3(astarisc minus\t%*s%d, -10, "abcde", 888); // -10に置き換えて、左詰
 
+		CASE(%% convert);
+		TEST(no convert%10%);
+		TEST(no convert%010%);
 
 		CASE(d convert);
 		TEST_ARG1(%d, 12345);
@@ -397,7 +389,7 @@ int	main(void)
 		TEST_ARG1(%.20p, &c);
 		TEST_ARG1(%015.3p, &c);//0フラグが取り消されるケース
 		TEST_ARG1(%-12.15p, &c);
-		TEST_ARG1(%-15.12p, &c);//NG
+		TEST_ARG1(%-15.12p, &c);
 		TEST_ARG1(%010p, &c);
 		TEST_ARG1(%010.p, &c); //0が設定されてフラグ取り消し
 		TEST_ARG1(%010.0p, &c); //0が設定されてフラグ取り消し
