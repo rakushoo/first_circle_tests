@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "ft_printf.h"
 
 #define CASE(msg) \
@@ -41,6 +40,7 @@ int	main(void)
 	int				i = 10;
 	unsigned int	ui = 5;
 	char c;
+	char s_hidden[] = "hi low";
 #if 0
 	//未対応ケース
 	TEST_ARG1(%1.3ywqd, 135);
@@ -69,10 +69,6 @@ int	main(void)
 #endif
 
 #if 1
-	TEST(%-5%);
-	TEST(%-05%);
-	TEST(%);
-	TEST(%-05);
 	TEST_ARG1(%.0i, 0);
 	TEST_ARG1(%.0x, 0);
 	TEST_ARG1(%-5.i, 0);
@@ -86,19 +82,32 @@ int	main(void)
 	TEST_ARG2(%010.*d, -5, 1234567);//0001234567
 	TEST_ARG1(%0.0d, 123456);
 
-	char s_hidden[] = "hi low";
 	TEST_ARG1(%3.1s, s_hidden);
 	TEST_ARG1(%3s, s_hidden);
 	TEST_ARG1(%-10.1s, s_hidden);
-#endif
+
 	TEST_ARG1(%.p, NULL);
 	TEST_ARG1(%p, NULL);
-	TEST_ARG1(%c, 0);
-	TEST_ARG1(%c, -0);
-	TEST_ARG1(%5c, '\0');
-	TEST_ARG1(%c, 0x0);
 	TEST_ARG1(%4.111111111111s, "123456789");
 	TEST_ARG2(minimum_field *\t\t%*s, 2,"ABCDE");
+#endif
+
+#if 1
+	TEST_ARG1(%0.3.9.12s, "ABCDEFGHI");
+	TEST_ARG1(%cABC, -0);
+	TEST_ARG1(%5cABC, '\0');
+	TEST_ARG1(%-5cABC, '\0');
+	TEST_ARG1(%sABC, "");//お手本は00, 自分のは20を返してる。違いは目視では確認できない。
+	TEST_ARG1(%5c, '\0');
+	TEST(%-5%);
+	TEST(%-05%);
+	TEST(%%);
+	TEST(%5%);
+
+	TEST(%);
+	TEST(%-05);
+	TEST(%05%);
+#endif
 #if 1
 	// Simple Conversion Management cspdiuxX
 	CASE(Simply check each conversion without any flags);
