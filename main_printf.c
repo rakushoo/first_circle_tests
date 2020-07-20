@@ -42,6 +42,15 @@ int	main(void)
 	unsigned int	ui = 5;
 	char c;
 	char s_hidden[] = "hi low";
+
+	printf("return value(%d)\n", printf("test[%12.0-00"));
+	//printf("test[%12.0-]\n");//""
+	printf("[%12s]\n", "abcdef");
+	printf("[%-12s]\n", "abcdef");
+	printf("[%.0-12s]\n", "abcdef");
+	printf("[%.1-12s]\n", "abcdef");
+	printf("[%.*s]\n", -12, "abcdef");
+
 #if 0
 	//未対応ケース
 	TEST_ARG1(%1.3ywqd, 135);
@@ -49,7 +58,7 @@ int	main(void)
 	TEST(%12.34q);
 #endif
 
-#if 1
+#if 0
 	TEST_ARG1(%020u, (unsigned int)&c);//0x0000007ffee1246787
 	TEST_ARG1(%015.3p, &c);	// 0x7ffee45c2777
 	TEST_ARG1(%20p, &c);	//      0x7ffee1246787
@@ -69,7 +78,7 @@ int	main(void)
 	TEST_ARG1(%016p, &c);			//0x007ffee9e2a777
 #endif
 
-#if 1
+#if 0
 	TEST_ARG1(%.0i, 0);
 	TEST_ARG1(%.0x, 0);
 	TEST_ARG1(%-5.i, 0);
@@ -93,7 +102,7 @@ int	main(void)
 	TEST_ARG2(minimum_field *\t\t%*s, 2,"ABCDE");
 #endif
 
-#if 1
+#if 0
 	TEST_ARG1(%0.3.9.12s, "ABCDEFGHI");
 	TEST_ARG1(%cABC, -0);
 	TEST_ARG1(%5cABC, '\0');
@@ -109,14 +118,15 @@ int	main(void)
 	TEST(%-05);
 	TEST(%05%);
 #endif
+#if 0
 	TEST_ARG1(%-16.14p, &c);		//0x007ffee9e2a777__
 	TEST_ARG1(%015.3X, 4294967295);//0フラグが取り消されるケース
 	TEST_ARG1(%-12.15X, 3000000000);
 	TEST_ARG1(%-15.12X, 4294967295);
 	TEST_ARG1(%015.3p, &c);//0フラグが取り消されるケース
 	TEST_ARG1(%-15.12p, &c);//NG
-
-#if 1
+#endif
+#if 0
 	// Simple Conversion Management cspdiuxX
 	CASE(Simply check each conversion without any flags);
 	{
