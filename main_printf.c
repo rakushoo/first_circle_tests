@@ -109,6 +109,13 @@ int	main(void)
 	TEST(%-05);
 	TEST(%05%);
 #endif
+	TEST_ARG1(%-16.14p, &c);		//0x007ffee9e2a777__
+	TEST_ARG1(%015.3X, 4294967295);//0フラグが取り消されるケース
+	TEST_ARG1(%-12.15X, 3000000000);
+	TEST_ARG1(%-15.12X, 4294967295);
+	TEST_ARG1(%015.3p, &c);//0フラグが取り消されるケース
+	TEST_ARG1(%-15.12p, &c);//NG
+
 #if 1
 	// Simple Conversion Management cspdiuxX
 	CASE(Simply check each conversion without any flags);
